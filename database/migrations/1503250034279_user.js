@@ -16,7 +16,6 @@ class UserSchema extends Schema {
       table.string("title").notNullable();
       table.datetime("date_of_birth");
       table.string("reply_in");
-      table.string("marital_status");
       table.string("password", 60).notNullable();
       table.timestamps();
     });

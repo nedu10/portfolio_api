@@ -13,8 +13,6 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use("Factory");
-const Hash = use("Hash");
-const Database = use("Database");
 
 // Factory.blueprint('App/Models/User', (faker) => {
 //     return {
@@ -23,14 +21,11 @@ const Database = use("Database");
 //   })
 
 Factory.blueprint("App/Models/User", async faker => {
-  await Database.truncate("users");
   return {
-    id: 1,
-    name: "Chinedu Chukwuemeka Ifediorah",
-    email: "cifediorah3@gmail.com",
-    title: "Electrical and Electronics Engineer, Fullstack Software Developer",
-    marital_status: "Single",
-    reply_in: "24",
-    password: await Hash.make("Chukwuemeka_11")
+    name: faker.name(),
+    email: faker.email(),
+    title: faker.string(),
+    reply_in: faker.integer({ min: 1, max: 2 }),
+    password: faker.password()
   };
 });
