@@ -25,3 +25,12 @@ Route.post("/api/login", "UserController.login").middleware(["guest"]);
 
 // user
 Route.put("/api/account/update", "UserController.update").middleware(["auth"]);
+
+//about
+Route.post("/api/account/about", "AboutController.create")
+  .validator("About")
+  .middleware(["auth"]);
+Route.put(
+  "/api/account/about/:about_id",
+  "AboutController.setVisibility"
+).middleware(["auth"]);

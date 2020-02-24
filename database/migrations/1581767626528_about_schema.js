@@ -15,6 +15,7 @@ class AboutSchema extends Schema {
         .inTable("users");
       table.string("title", 1000).notNullable();
       table.text("description").notNullable();
+      table.boolean("set_visible").defaultTo(0);
       table.string("img_url");
       table.timestamps();
     });
