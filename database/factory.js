@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +12,25 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-// const Factory = use('Factory')
+const Factory = use("Factory");
+const Hash = use("Hash");
+const Database = use("Database");
 
 // Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+//     return {
+//       username: faker.username()
+//     }
+//   })
+
+Factory.blueprint("App/Models/User", async faker => {
+  await Database.truncate("users");
+  return {
+    id: 1,
+    name: "Chinedu Chukwuemeka Ifediorah",
+    email: "cifediorah3@gmail.com",
+    title: "Electrical and Electronics Engineer, Fullstack Software Developer",
+    marital_status: "Single",
+    reply_in: "24",
+    password: await Hash.make("Chukwuemeka_11")
+  };
+});
