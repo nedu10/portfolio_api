@@ -22,3 +22,6 @@ Route.get("/", () => {
 
 //Login
 Route.post("/api/login", "UserController.login").middleware(["guest"]);
+
+// user
+Route.put("/api/account/update", "UserController.update").middleware(["auth"]);

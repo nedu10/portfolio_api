@@ -1,6 +1,5 @@
 "use strict";
 const User = use("App/Models/User");
-const Hash = use("Hash");
 
 class UserController {
   async login({ request, response, auth }) {
@@ -34,6 +33,30 @@ class UserController {
         status: "Failed",
         message: "Failed Internal server error",
         error: error
+      });
+    }
+  }
+  async update({ request, response, auth }) {
+    const { name, title, reply_in, date_of_birth } = request.post();
+    try {
+      const authUser = auth.current.user;
+      authUser.name = name ? name : authUser.name;
+      authUser.title = title ? title : authUser.title;
+      authUser.reply_in = reply_in ? reply_in : authUser.reply_in;
+      authUser.date_of_birth = date_of_birth
+        ? date_of_birth
+        : authUser.date_of_birth;
+      const updateUser = await authUser.save();
+      return response.status(202).json({
+        status: "Success",
+        message: "successfully update user data",
+        data: updateUser
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({
+        status: "failed",
+        message: "Internal server error"
       });
     }
   }
