@@ -17,7 +17,7 @@ module.exports = {
       await file_to_upload.move(storagePath, {
         name: file_name
       });
-      console.log("am in a custom file and i just save a file");
+      // console.log("am in a custom file and i just save a file");
 
       if (!file_to_upload.moved()) {
         console.log("file_to_upload.err", file_to_upload.error());
@@ -27,6 +27,8 @@ module.exports = {
           errors: file_to_upload.error()
         });
       }
+
+      console.log("am in a custom file and i just save a file");
 
       return true;
     }
@@ -55,13 +57,13 @@ module.exports = {
               errors: err
             });
           }
-          console.log("existing file was replaced");
+          console.log("existing file was found");
         });
       }
       await file_to_upload.move(storagePath, {
         name: file_name
       });
-      console.log("am in a custom file and i just save a file");
+      console.log("am in a custom file and i just reolaced a file");
       if (!file_to_upload.moved()) {
         console.log("file_to_upload.err", file_to_upload.error());
         return response.status(406).send({

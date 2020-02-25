@@ -88,6 +88,74 @@ class AboutController {
       });
     }
   }
+
+  async update({ response, auth, request, params }) {
+    const { title, description } = request.post();
+    const { about_id } = params;
+
+    const aboutImage = request.file("about_image", {
+      types: ["image"],
+      size: "3mb"
+    });
+    try {
+      const get_about = await About.query()
+        .where("id", about_id)
+        .andWhere("user_id", auth.current.user.id)
+        .first();
+
+      const about_img_src_link = get_about.img_url;
+
+      if (aboutImage) {
+        var aboutImageName = `${new Date().getTime()}_${aboutImage.fieldName}.${
+          aboutImage.extname
+        }`;
+      }
+
+      if (aboutImage && about_img_src_link) {
+        const update_file = await UploadFile.updateFile(
+          response,
+          aboutImage,
+          "uploads/about-image",
+          aboutImageName,
+          about_img_src_link
+        );
+
+        console.log("new edited file >> ", update_file);
+      }
+
+      if (aboutImage && !about_img_src_link) {
+        const update_file = await UploadFile.createFile(
+          response,
+          aboutImage,
+          "uploads/about-image",
+          aboutImageName
+        );
+      }
+
+      get_about.title = title ? title : get_about.title;
+      get_about.description = description ? title : get_about.description;
+      aboutImage
+        ? (get_about.img_url =
+            Env.get("APP_URL", "127.0.0.1") +
+            "/uploads/about-image/" +
+            aboutImageName)
+        : (get_about.img_url = get_about.img_url);
+
+      const update_about = await get_about.save();
+
+      return response.status(202).json({
+        status: "Success",
+        message: "Successfully update about",
+        data: update_about
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({
+        status: "Failed",
+        message: "internal server error"
+      });
+    }
+  }
 }
 
 module.exports = AboutController;
