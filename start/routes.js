@@ -38,3 +38,24 @@ Route.put(
   "/api/account/about/update/:about_id",
   "AboutController.update"
 ).middleware(["auth"]);
+Route.delete(
+  "/api/account/about/delete/:about_id",
+  "AboutController.delete"
+).middleware(["auth"]);
+
+//mobile number
+Route.post("/api/account/mobile_no", "MobileNumberController.create")
+  .validator("MobileNumber")
+  .middleware(["auth"]);
+Route.put(
+  "/api/account/mobile_no/visible/:mobile_no_id",
+  "MobileNumberController.setVisibility"
+).middleware(["auth"]);
+Route.put(
+  "/api/account/mobile_no/update/:mobile_no_id",
+  "MobileNumberController.update"
+).middleware(["auth"]);
+Route.delete(
+  "/api/account/mobile_no/delete/:mobile_no_id",
+  "MobileNumberController.delete"
+).middleware(["auth"]);

@@ -156,6 +156,35 @@ class AboutController {
       });
     }
   }
+
+  async delete({ response, auth, params }) {
+    const { about_id } = params;
+    try {
+      const authenticatedUser = auth.current.user;
+      const get_user = await About.query()
+        .where("id", about_id)
+        .andWhere("user_id", authenticatedUser.id)
+        .first();
+      if (!get_user) {
+        return response.status(400).json({
+          status: "Failed",
+          message: "Data not found"
+        });
+      } else {
+        await get_user.delete();
+        return response.status(200).json({
+          status: "Success",
+          message: "Successfully deleted about data"
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({
+        status: "Failed",
+        message: "internal server error"
+      });
+    }
+  }
 }
 
 module.exports = AboutController;
