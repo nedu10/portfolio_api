@@ -34,10 +34,9 @@ Route.put(
   "/api/account/about/visible/:about_id",
   "AboutController.setVisibility"
 ).middleware(["auth"]);
-Route.put(
-  "/api/account/about/update/:about_id",
-  "AboutController.update"
-).middleware(["auth"]);
+Route.put("/api/account/about/update/:about_id", "AboutController.update")
+  .validator("About")
+  .middleware(["auth"]);
 Route.delete(
   "/api/account/about/delete/:about_id",
   "AboutController.delete"
@@ -54,8 +53,25 @@ Route.put(
 Route.put(
   "/api/account/mobile_no/update/:mobile_no_id",
   "MobileNumberController.update"
-).middleware(["auth"]);
+)
+  .validator("MobileNumber")
+  .middleware(["auth"]);
 Route.delete(
   "/api/account/mobile_no/delete/:mobile_no_id",
   "MobileNumberController.delete"
+).middleware(["auth"]);
+
+//education
+Route.post("/api/account/education", "EducationController.create")
+  .validator("Education")
+  .middleware(["auth"]);
+Route.put(
+  "/api/account/education/update/:education_id",
+  "EducationController.update"
+)
+  .validator("Education")
+  .middleware(["auth"]);
+Route.delete(
+  "/api/account/education/delete/:education_id",
+  "EducationController.delete"
 ).middleware(["auth"]);

@@ -106,7 +106,7 @@ class MobileNumberController {
         await get_mobile_no.delete();
         return response.status(200).json({
           status: "Success",
-          message: "Successfully deleted about data"
+          message: "Successfully deleted mobile number data"
         });
       }
     } catch (error) {
